@@ -17,21 +17,19 @@ services:
     networks:
       - backend
       
-  # backend-app:
-  #   image: volunteer-victoria-be:dev
-  #   container_name: volunteer-victoria-be
-  #   build:
-  #     context: ./packages/back_end
-  #     dockerfile: Dockerfile.dev
-  #   ports:
-  #     - "4000:4000"      
-  #   expose:
-  #     - "4000"
-  #   volumes:
-  #     - ./packages/back_end/app:/usr/src/app
-  #     - /usr/src/app/node_modules
-  #   networks:
-  #     - backend
+  api:
+    build:
+      context: ./packages/api
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:4000"
+    expose:
+      - "4000"
+    volumes:
+      - ./packages/api:/usr/src/app/api
+      - ./packages/api/node_modules:/usr/src/app/api/node_modules
+    networks:
+      - backend
 
 networks:
   backend:
