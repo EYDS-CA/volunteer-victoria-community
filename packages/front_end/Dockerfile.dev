@@ -1,0 +1,21 @@
+FROM node:14.16.1
+
+MAINTAINER FreshWorks <web@freshworks.io>
+
+ENV PATH $PATH:/usr/src/app/node_modules/.bin
+
+WORKDIR /usr/src/app
+
+COPY ./front_end/app/package*.json ./front_end/app/
+
+# Install dependencies
+# RUN apk add --no-cache git
+
+RUN apt-get update
+RUN apt-get install libgl1 -y
+
+RUN cd ./front_end/app && npm i && cd ../
+
+EXPOSE 3000
+
+CMD [ "npm", "--prefix", "./front_end/app/", "run", "start" ]
