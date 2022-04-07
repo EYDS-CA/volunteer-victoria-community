@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  frontend-app:
+    image: volunteer-victoria-fe:dev
+    container_name: volunteer-victoria-fe
+    build:
+      context: ./packages/front_end
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./packages/front_end:/usr/src/app/front_end
+      - /usr/src/app/front_end/app/node_modules
+    # depends_on:
+    #   - backend-app
+    networks:
+      - backend
+      
+  # backend-app:
+  #   image: volunteer-victoria-be:dev
+  #   container_name: volunteer-victoria-be
+  #   build:
+  #     context: ./packages/back_end
+  #     dockerfile: Dockerfile.dev
+  #   ports:
+  #     - "4000:4000"      
+  #   expose:
+  #     - "4000"
+  #   volumes:
+  #     - ./packages/back_end/app:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #   networks:
+  #     - backend
+
+networks:
+  backend:
+    driver: "bridge"
