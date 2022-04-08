@@ -4,6 +4,7 @@ import {
   rangeKey,
   table,
 } from '@aws/dynamodb-data-mapper-annotations';
+import { Post } from '../types/Post';
 import { UserTypeEnum } from '../types/enum/UserType';
 
 @table('users')
@@ -35,4 +36,7 @@ export class User {
 
   @attribute()
   recentCRC: boolean;
+
+  @attribute()
+  confirmedAttending: Array<Post>;
 }
