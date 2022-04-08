@@ -3,6 +3,7 @@ import { LinearProgress, ThemeProvider } from '@mui/material';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import store from 'store';
 import { theme } from './theme';
+import PostDetails from './Views/Posting';
 
 const Authentication = lazy(() => import('./Views/Authentication'));
 
@@ -40,7 +41,16 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Suspense fallback={<Loader />}>
           <Routes>
-            <Route 
+            <Route
+              path='/posting/:id'
+              element={
+                <PrivateRoute>
+                  <PostDetails></PostDetails>
+                </PrivateRoute>
+                
+              }
+            />
+            <Route
               path="/" 
               element={
                 <PublicRoute>
