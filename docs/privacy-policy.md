@@ -5,3 +5,4 @@ You may have the opportunity to connect to Volunteer Victoria through Facebook's
 - your email address
 - your birthday
 - your location (i.e. city)
+- your phone number
