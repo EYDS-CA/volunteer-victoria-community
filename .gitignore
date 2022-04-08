@@ -5,5 +5,7 @@
 .DS_STORE
 
 .localstack
+*.log
 .build
 **/.yarn/cache
+.yarn/install-state.gz

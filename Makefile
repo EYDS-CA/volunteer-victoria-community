@@ -128,11 +128,7 @@ build-and-deploy: build-all deploy-all
 
 run-local:
 	@echo "+\n++ Make: Running locally ...\n+"
-	@COMPOSE_HTTP_TIMEOUT=200 docker-compose -f docker-compose.dev.yml up
-
-run-local-retailer:
-	@echo "+\n++ Make: Running client locally ...\n+"
-	@docker-compose -f docker-compose.dev.yml up retailer-app
+	@COMPOSE_HTTP_TIMEOUT=200 docker-compose -f docker-compose.yml up
 
 run-local-api:
 	@echo "+\n++ Make: Running api locally ...\n+"

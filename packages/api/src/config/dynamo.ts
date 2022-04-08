@@ -1,4 +1,5 @@
 import { DynamoDB } from 'aws-sdk';
+import { DataMapper } from '@aws/dynamodb-data-mapper';
 
 const dynamoDBOptions: DynamoDB.ClientConfiguration = {
   region: process.env.AWS_DEFAULT_REGION || 'ca-central-1',
@@ -18,3 +19,4 @@ dynamoDBOptions.endpoint = process.env.DB_ENDPOINT;
 dynamoDBOptions.sslEnabled = false;
 
 export const DynamoClient = new DynamoDB(dynamoDBOptions);
+export const DynamoMapper = new DataMapper({ client: DynamoClient });
