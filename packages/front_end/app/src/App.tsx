@@ -1,5 +1,5 @@
+import React, { lazy, Suspense, useEffect } from 'react';
 import { LinearProgress, ThemeProvider } from '@mui/material';
-import React, { lazy, Suspense } from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import store from 'store';
 import { theme } from './theme';
@@ -30,6 +30,11 @@ const Loader = () => (
 );
 
 const App = () => {
+
+  useEffect(() => {
+    document.body.style.margin = '0px'
+  }, [])
+
   return (
     <HashRouter>
       <ThemeProvider theme={theme}>
