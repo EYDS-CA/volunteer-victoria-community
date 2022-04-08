@@ -17,21 +17,39 @@ services:
     networks:
       - backend
       
-  # backend-app:
-  #   image: volunteer-victoria-be:dev
-  #   container_name: volunteer-victoria-be
-  #   build:
-  #     context: ./packages/back_end
-  #     dockerfile: Dockerfile.dev
-  #   ports:
-  #     - "4000:4000"      
-  #   expose:
-  #     - "4000"
-  #   volumes:
-  #     - ./packages/back_end/app:/usr/src/app
-  #     - /usr/src/app/node_modules
-  #   networks:
-  #     - backend
+  api:
+    build:
+      context: ./packages/api
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:4000"
+    expose:
+      - "4000"
+    volumes:
+      - ./packages/api:/usr/src/app/api
+      - ./packages/api/node_modules:/usr/src/app/api/node_modules
+    depends_on:
+      - localstack
+    networks:
+      - backend
+  
+  localstack:
+    image: localstack/localstack:0.12.15
+    ports:
+      - '127.0.0.1:4510-4559:4510-4559' # external service port range
+      - '127.0.0.1:4566:4566'
+      - '127.0.0.1:8080:8080'
+    environment:
+      - SERVICES=dynamodb
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - EXTRA_CORS_ALLOWED_ORIGIN=file://
+    volumes:
+      - './.aws:/docker-entrypoint-initaws.d'
+      - './.localstack:/tmp/localstack'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    networks:
+      - backend
 
 networks:
   backend:
