@@ -37,6 +37,10 @@ resource "aws_cloudfront_function" "response" {
 
 resource "aws_s3_bucket" "app_logs" {
   bucket = "${local.app_name}-logs"
+}
+
+resource "aws_s3_bucket_acl" "app_logs" {
+  bucket = aws_s3_bucket.app_logs.id
   acl    = "log-delivery-write"
 }
 

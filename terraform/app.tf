@@ -1,20 +1,35 @@
 resource "aws_s3_bucket" "bucket_logs" {
   bucket = "${local.namespace}-bucket-logs"
+}
+
+resource "aws_s3_bucket_acl" "bucket_logs" {
+  bucket = aws_s3_bucket.bucket_logs.id
   acl    = "log-delivery-write"
 }
+
 resource "aws_s3_bucket" "app" {
   bucket = var.app_sources_bucket
+}
+
+resource "aws_s3_bucket_acl" "app" {
+  bucket = aws_s3_bucket.app.id
   acl    = "private"
+}
 
-  logging {
-    target_bucket = aws_s3_bucket.bucket_logs.id
-    target_prefix = "${var.app_sources_bucket}/"
-  }
-
-  versioning {
-    enabled = true
+resource "aws_s3_bucket_versioning" "app_versioning" {
+  bucket = aws_s3_bucket.app.id
+  versioning_configuration {
+    status = "Enabled"
   }
 }
+
+resource "aws_s3_bucket_logging" "app" {
+  bucket = aws_s3_bucket.app.id
+
+  target_bucket = aws_s3_bucket.bucket_logs.id
+  target_prefix = "${var.app_sources_bucket}/"
+}
+
 
 resource "aws_s3_bucket_policy" "app" {
   bucket = aws_s3_bucket.app.id
