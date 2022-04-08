@@ -1,0 +1,53 @@
+name: Build And Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Tag to deploy.'
+        default: "main"
+        required: true
+      environment:
+        description: 'Environment to deploy'
+        required: true
+        default: dev
+        type: choice
+        options:
+        - dev
+        - prod
+
+env:
+  ENV_NAME: ${{github.event.inputs.environment}}
+
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-20.04
+    steps:
+
+      - name: Code checkout
+        uses: actions/checkout@v2
+        ref: ${{github.event.inputs.version}}
+
+      - name: Print local env
+        run: make print-env
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-skip-session-tagging: true
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_ID }}
+          aws-region: ca-central-1
+
+      - name: Build API
+        run: make build-api
+
+      - name: Build App
+        run: make build-app
+
+      - name: Deploy API and infrastructure
+        run: make deploy-api
+      
+      - name: Deploy app to CloudFront
+        run: make deploy-app
