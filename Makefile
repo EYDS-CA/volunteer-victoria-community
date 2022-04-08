@@ -70,7 +70,7 @@ write-config-tf:
 init: write-config-tf
 	@terraform -chdir=$(TERRAFORM_DIR) init -input=false -reconfigure -backend-config=backend.hcl
 
-apply:
+apply: 
 	@terraform -chdir=$(TERRAFORM_DIR) apply -auto-approve -input=false
 
 plan: init
