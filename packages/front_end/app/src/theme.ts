@@ -3,8 +3,12 @@ import { createTheme } from '@mui/material/styles'
 export const theme = createTheme({
   typography: {
     fontFamily: [
-      'BCSans', 'Raleway', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif'
+      'Montserrat', 'sans-serif'
     ].join(','),
+    h1: {
+      fontSize: '3rem',
+      fontWeight: 600,
+    },
     h5: {
       color: '#002C71',
       fontSize: '27px',
@@ -16,7 +20,7 @@ export const theme = createTheme({
       fontWeight: 600
     },
     subtitle1: {
-      fontSize: '17px',
+      fontSize: '1.5rem',
       fontWeight: 600
     },
     subtitle2: {
@@ -25,7 +29,7 @@ export const theme = createTheme({
       fontWeight: 600
     },
     body1: {
-      fontSize: '16px',
+      fontSize: '1.2rem',
     },
     body2: {
       fontSize: '14px'
