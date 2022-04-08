@@ -28,6 +28,26 @@ services:
     volumes:
       - ./packages/api:/usr/src/app/api
       - ./packages/api/node_modules:/usr/src/app/api/node_modules
+    depends_on:
+      - localstack
+    networks:
+      - backend
+  
+  localstack:
+    image: localstack/localstack:0.12.15
+    ports:
+      - '127.0.0.1:4510-4559:4510-4559' # external service port range
+      - '127.0.0.1:4566:4566'
+      - '127.0.0.1:8080:8080'
+    environment:
+      - SERVICES=dynamodb
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - EXTRA_CORS_ALLOWED_ORIGIN=file://
+    volumes:
+      - './.aws:/docker-entrypoint-initaws.d'
+      - './.localstack:/tmp/localstack'
+      - '/var/run/docker.sock:/var/run/docker.sock'
     networks:
       - backend
 
