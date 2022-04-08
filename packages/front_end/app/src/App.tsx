@@ -18,7 +18,6 @@ const Authentication = lazy(() => import('./Views/Authentication'));
 const PublicRoute: React.FC<any> = ({ children }) => {
   const auth = store.get('auth')
   // Dummy auth for getting routes set up, replace check with proper auth
-  console.log('AUTH', auth)
   return (
     auth ? <Navigate to="/dashboard"/> : children
   )
