@@ -32,6 +32,13 @@ services:
       - localstack
     networks:
       - backend
+    environment:
+      - NODE_ENV=docker
+      - AWS_DEFAULT_REGION=ca-central-1
+      - AWS_ACCESS_KEY_ID=xxx
+      - AWS_SECRET_ACCESS_KEY=yyy
+      - DB_ENDPOINT=http://localstack:4566
+      - HOST_PORT=4000
   
   localstack:
     image: localstack/localstack:0.12.15
