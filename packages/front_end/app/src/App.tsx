@@ -1,27 +1,53 @@
-import React from 'react';
-import { makeStyles } from '@mui/styles';
+import React, { lazy, Suspense } from 'react';
+import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { LinearProgress, ThemeProvider } from '@mui/material';
+import store from 'store'
 
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    flexDirection: 'column',
-    minHeight: '100vh',
-  },
-  appBody :{
-    display: 'flex',
-    flex: '1',
-    maxWidth: '100%',
-    paddingTop: '70px',
-  }
-});
+import { theme } from './theme';
+
+const Authentication = lazy(() => import('./Views/Authentication'));
+
+const PrivateRoute: React.FC<any> = ({ children }) => {
+  const auth = store.get('auth') 
+  // Dummy auth for getting routes set up, replace check with proper auth
+  return (
+    auth ? children : <Navigate to="/"/>
+  );
+};
+
+const PublicRoute: React.FC<any> = ({ children }) => {
+  const auth = store.get('auth')
+  // Dummy auth for getting routes set up, replace check with proper auth
+  console.log('AUTH', auth)
+  return (
+    auth ? <Navigate to="/dashboard"/> : children
+  )
+};
+
+const Loader = () => (
+  <LinearProgress
+    style={{ borderRadius: '5%', height: '5px', width: '95vw', margin: 'auto' }}
+  />
+);
 
 const App = () => {
-  const classes = useStyles();
   return (
-    <div className={classes.root}>
-      Hello world!
-    </div>
+    <HashRouter>
+      <ThemeProvider theme={theme}>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route 
+              path="/" 
+              element={
+                <PublicRoute>
+                  <Authentication/>
+                </PublicRoute>
+              }
+            />
+          </Routes>
+        </Suspense>
+      </ThemeProvider>
+    </HashRouter>
   );
 };
 
