@@ -76,28 +76,41 @@ apply:
 plan: init
 	@terraform -chdir=$(TERRAFORM_DIR) plan
 
+clean-yarn: 
+	@rm -rf node_modules
+	@yarn
+
 destroy: init
 	@terraform -chdir=$(TERRAFORM_DIR) destroy
 
-deploy-api: init 
-	@terraform -chdir=$(TERRAFORM_DIR) apply -auto-approve -input=false
+deploy-api: 
+	@aws lambda update-function-code --function-name $(NAMESPACE)-api --zip-file fileb://.build/api.zip
 
 deploy-app:
-	aws s3 sync ./terraform/build/app s3://$(APP_SRC_BUCKET) --delete
+	aws s3 sync .build/app s3://$(APP_SRC_BUCKET) --delete
 
-deploy: deploy-api deploy-app
+deploy-all: deploy-api deploy-app
 
 ## Application stack building
-pre-build:
-	mkdir -p ./terraform/build
+pre-build: clean-yarn
+	@rm -rf ./packages/api/dist
+	@rm -rf .build || true
+	@mkdir -p .build
 
 build-api: pre-build
+	@echo "Building API for AWS Lambda"
+	@yarn workspace api run build
+	@yarn workspaces focus api --production
+	@cp -r node_modules .build/node_modules
+	@rm -rf .build/node_modules/api
+	@cp -r ./packages/api/dist/* .build
+	@(cd .build; zip -rmq api.zip *)
 
 build-app: pre-build
 
 build-all: build-api build-app
 
-build-and-deploy: build-all deploy
+build-and-deploy: build-all deploy-all
 
 
 #Database
@@ -136,7 +149,3 @@ close-local:
 build-local:
 	@echo "+\n++ Make: rebuilding and runing docker-compose"
 	@docker-compose -f docker-compose.dev.yml up --build
-
-package-build:
-	@echo "+\n++ Building + Packaging app for deployment"
-	.build/package-app.sh

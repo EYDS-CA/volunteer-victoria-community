@@ -1,5 +1,4 @@
 variable "project_code" {}
-variable "api_artifact" {}
 variable "app_sources" {}
 variable "target_env" {}
 variable "domain" {}

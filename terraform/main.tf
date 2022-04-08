@@ -40,4 +40,5 @@ locals {
   app_name         = "${local.namespace}-app"
   api_name         = "${local.namespace}-api"
   has_domain       = var.domain != ""
+  empty_api_zip    = ".artifacts/empty_lambda.zip"
 }

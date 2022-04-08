@@ -1,34 +1,39 @@
 name: Build And Deploy
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Tag to deploy.'
-        default: "main"
-        required: true
-      environment:
-        description: 'Environment to deploy'
-        required: true
-        default: dev
-        type: choice
-        options:
-        - dev
-        - prod
+  push:
+    tags:
+      - dev
 
 env:
-  ENV_NAME: ${{github.event.inputs.environment}}
+  TF_VERSION: 1.1.8
 
 jobs:
   deploy:
     name: Build and Deploy
     runs-on: ubuntu-20.04
+    timeout-minutes: 10
     steps:
-
       - name: Code checkout
         uses: actions/checkout@v2
-        ref: ${{github.event.inputs.version}}
 
+      - name: Extract tag name
+        run: echo "ENV_NAME=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+
+      - name: Print local env
+        run: make print-env
+
+      - uses: actions/cache@v2
+        name: Cache yarn
+        with:
+          path: ./.yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
+
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      
       - name: Print local env
         run: make print-env
 
@@ -40,14 +45,20 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_ID }}
           aws-region: ca-central-1
 
+      - name: Init Terraform
+        run: make init
+
       - name: Build API
         run: make build-api
 
-      - name: Build App
-        run: make build-app
+      # - name: Build App
+      #   run: make build-app
 
-      - name: Deploy API and infrastructure
-        run: make deploy-api
+      - name: Deploy infrastructure
+        run: make apply
       
-      - name: Deploy app to CloudFront
-        run: make deploy-app
+      - name: Deploy API to Lambda
+        run: make deploy-api
+
+      # - name: Deploy app to CloudFront
+      #   run: make deploy-app
