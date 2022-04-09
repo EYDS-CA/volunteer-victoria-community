@@ -6,13 +6,11 @@ const dynamoDBOptions: DynamoDB.ClientConfiguration = {
 };
 
 if (process.env.AWS_ACCESS_KEY_ID) {
-  dynamoDBOptions.credentials['accessKeyId'] = process.env.AWS_ACCESS_KEY_ID;
-}
-if (process.env.AWS_SECRET_ACCESS_KEY) {
-  dynamoDBOptions.credentials['secretAccessKey'] = process.env.AWS_SECRET_ACCESS_KEY;
-}
-if (process.env.AWS_SESSION_TOKEN) {
-  dynamoDBOptions.credentials['sessionToken'] = process.env.AWS_SESSION_TOKEN;
+  dynamoDBOptions.credentials = {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    sessionToken: process.env.AWS_SESSION_TOKEN
+  }
 }
 
 dynamoDBOptions.endpoint = process.env.DB_ENDPOINT;
