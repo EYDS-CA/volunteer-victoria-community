@@ -1,8 +1,7 @@
-import React, { lazy, Suspense } from 'react';
-import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { LinearProgress, ThemeProvider } from '@mui/material';
-import store from 'store'
-
+import React, { lazy, Suspense } from 'react';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import store from 'store';
 import { theme } from './theme';
 
 const Authentication = lazy(() => import('./Views/Authentication'));
