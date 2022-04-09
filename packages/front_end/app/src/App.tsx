@@ -1,26 +1,24 @@
+import React, { lazy, Suspense, useEffect } from 'react';
 import { LinearProgress, ThemeProvider } from '@mui/material';
-import React, { lazy, Suspense } from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import store from 'store';
 import { theme } from './theme';
 
+const PostDetails = lazy(() => import('./Views/PostDetails'));
+const Dashboard = lazy(() => import('./Views/OpportunitiesDashboard'));
 const Authentication = lazy(() => import('./Views/Authentication'));
 
-// TODO remove or use - can't build with unused vars in the CI
-// const PrivateRoute: React.FC<any> = ({ children }) => {
-//   const auth = store.get('auth') 
-//   // Dummy auth for getting routes set up, replace check with proper auth
-//   return (
-//     auth ? children : <Navigate to="/"/>
-//   );
-// };
+const PrivateRoute: React.FC<any> = ({ children }) => {
+  const auth = store.get('auth') 
+  return (
+    auth ? children : <Navigate to="/"/>
+  );
+};
 
 const PublicRoute: React.FC<any> = ({ children }) => {
   const auth = store.get('auth')
-  // Dummy auth for getting routes set up, replace check with proper auth
-  console.log('AUTH', auth)
   return (
-    auth ? <Navigate to="/dashboard"/> : children
+    auth ? <Navigate to="/opportunities"/> : children
   )
 };
 
@@ -31,17 +29,40 @@ const Loader = () => (
 );
 
 const App = () => {
+
+  useEffect(() => {
+    document.body.style.margin = '0px'
+  }, [])
+
   return (
     <HashRouter>
       <ThemeProvider theme={theme}>
         <Suspense fallback={<Loader />}>
           <Routes>
-            <Route 
+            <Route
               path="/" 
               element={
                 <PublicRoute>
                   <Authentication/>
                 </PublicRoute>
+              }
+            />
+            <Route
+              path='/post/:id'
+              element={
+                <PrivateRoute>
+                  <PostDetails></PostDetails>
+                </PrivateRoute>
+                
+              }
+            />
+                        <Route
+              path='/opportunities'
+              element={
+                <PrivateRoute>
+                  <Dashboard></Dashboard>
+                </PrivateRoute>
+                
               }
             />
           </Routes>
