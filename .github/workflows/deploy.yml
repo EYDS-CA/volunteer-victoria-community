@@ -48,9 +48,6 @@ jobs:
       - name: Init terraform
         run: make init
 
-      - name: Init yarn
-        run: make pre-build
-
       - name: Build API
         run: make build-api
 

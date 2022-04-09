@@ -86,10 +86,6 @@ deploy-tf: init
 plan: init
 	@terraform -chdir=$(TERRAFORM_DIR) plan
 
-clean-yarn: 
-	@rm -rf node_modules
-	@yarn
-
 destroy: init
 	@terraform -chdir=$(TERRAFORM_DIR) destroy
 
@@ -100,14 +96,16 @@ deploy-app:
 deploy-all: deploy-tf deploy-app
 
 ## Application stack building
-pre-build: clean-yarn
+clean: 
+	@rm -rf node_modules
+	@yarn
 	@rm -rf ./packages/api/dist
 	@rm -rf terraform/build || true
 	@mkdir -p terraform/build
-	@yarn install
 
 build-api:
 	@echo "Building API for AWS Lambda"
+	@yarn workspaces focus api
 	@yarn workspace api run build
 	@yarn workspaces focus api --production
 	@cp -r node_modules terraform/build/node_modules
@@ -116,6 +114,7 @@ build-api:
 	@(cd terraform/build; zip -rmq api.zip *)
 
 build-app:
+	@yarn workspaces focus app
 	@yarn workspace app build
 
 build-all: pre-build build-api build-app
