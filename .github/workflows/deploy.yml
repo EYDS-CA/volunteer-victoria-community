@@ -54,11 +54,8 @@ jobs:
       # - name: Build App
       #   run: make build-app
 
-      - name: Deploy infrastructure
-        run: make apply
-      
-      - name: Deploy API to Lambda
-        run: make deploy-api
+      - name: Deploy infrastructure and API
+        run: make deploy-tf
 
       # - name: Deploy app to CloudFront
       #   run: make deploy-app

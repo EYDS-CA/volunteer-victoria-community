@@ -3,8 +3,8 @@ resource "aws_lambda_function" "api" {
   function_name    = local.api_name
   role             = aws_iam_role.lambda.arn
   runtime          = "nodejs14.x"
-  filename         = local.empty_api_zip
-  source_code_hash = filebase64sha256(local.empty_api_zip)
+  filename         = var.api_artifact
+  source_code_hash = filebase64sha256(var.api_artifact)
   handler          = "lambda.handler"
   memory_size      = var.function_memory_mb
   timeout          = 30

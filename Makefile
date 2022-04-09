@@ -78,7 +78,7 @@ write-config-tf:
 init: write-config-tf
 	@terraform -chdir=$(TERRAFORM_DIR) init -input=false -reconfigure -backend-config=backend.hcl
 
-apply: 
+deploy-tf: init
 	@terraform -chdir=$(TERRAFORM_DIR) apply -auto-approve -input=false
 
 plan: init
@@ -91,28 +91,25 @@ clean-yarn:
 destroy: init
 	@terraform -chdir=$(TERRAFORM_DIR) destroy
 
-deploy-api: 
-	@aws lambda update-function-code --function-name $(NAMESPACE)-api --zip-file fileb://.build/api.zip
-
 deploy-app:
-	aws s3 sync .build/app s3://$(APP_SRC_BUCKET) --delete
+	aws s3 sync terraform/build/app s3://$(APP_SRC_BUCKET) --delete
 
-deploy-all: deploy-api deploy-app
+deploy-all: deploy-tf deploy-app
 
 ## Application stack building
 pre-build: clean-yarn
 	@rm -rf ./packages/api/dist
-	@rm -rf .build || true
-	@mkdir -p .build
+	@rm -rf terraform/build || true
+	@mkdir -p terraform/build
 
 build-api: pre-build
 	@echo "Building API for AWS Lambda"
 	@yarn workspace api run build
 	@yarn workspaces focus api --production
-	@cp -r node_modules .build/node_modules
-	@rm -rf .build/node_modules/api
-	@cp -r ./packages/api/dist/* .build
-	@(cd .build; zip -rmq api.zip *)
+	@cp -r node_modules terraform/build/node_modules
+	@rm -rf terraform/build/node_modules/api
+	@cp -r ./packages/api/dist/* terraform/build
+	@(cd terraform/build; zip -rmq api.zip *)
 
 build-app: pre-build
 
