@@ -51,11 +51,11 @@ jobs:
       - name: Build API
         run: make build-api
 
-      # - name: Build App
-      #   run: make build-app
+      - name: Build App
+        run: make build-app
 
       - name: Deploy infrastructure and API
         run: make deploy-tf
 
-      # - name: Deploy app to CloudFront
-      #   run: make deploy-app
+      - name: Deploy app to CloudFront
+        run: make deploy-app
