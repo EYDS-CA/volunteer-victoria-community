@@ -4,13 +4,13 @@ import { LinearProgress, ThemeProvider } from '@mui/material';
 import store from 'store'
 
 import { theme } from './theme';
-import PostDetails from './Views/Posting';
 
+const PostDetails = lazy(() => import('./Views/PostDetails'));
+const Dashboard = lazy(() => import('./Views/OpportunitiesDashboard'));
 const Authentication = lazy(() => import('./Views/Authentication'));
 
 const PrivateRoute: React.FC<any> = ({ children }) => {
   const auth = store.get('auth') 
-  // Dummy auth for getting routes set up, replace check with proper auth
   return (
     auth ? children : <Navigate to="/"/>
   );
@@ -18,9 +18,8 @@ const PrivateRoute: React.FC<any> = ({ children }) => {
 
 const PublicRoute: React.FC<any> = ({ children }) => {
   const auth = store.get('auth')
-  // Dummy auth for getting routes set up, replace check with proper auth
   return (
-    auth ? <Navigate to="/dashboard"/> : children
+    auth ? <Navigate to="/opportunities"/> : children
   )
 };
 
@@ -42,7 +41,15 @@ const App = () => {
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route
-              path='/posting/:id'
+              path="/" 
+              element={
+                <PublicRoute>
+                  <Authentication/>
+                </PublicRoute>
+              }
+            />
+            <Route
+              path='/post/:id'
               element={
                 <PrivateRoute>
                   <PostDetails></PostDetails>
@@ -50,12 +57,13 @@ const App = () => {
                 
               }
             />
-            <Route
-              path="/" 
+                        <Route
+              path='/opportunities'
               element={
-                <PublicRoute>
-                  <Authentication/>
-                </PublicRoute>
+                <PrivateRoute>
+                  <Dashboard></Dashboard>
+                </PrivateRoute>
+                
               }
             />
           </Routes>

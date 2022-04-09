@@ -3,18 +3,18 @@ import React from 'react';
 import store from 'store'
 import FacebookLogin, { ReactFacebookLoginInfo } from 'react-facebook-login';
 import { makeStyles } from '@mui/styles';
+import PageLayout from '../components/Layouts/PageLayout';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
     display: 'flex',
-    flexWrap: 'wrap',
-    minHeight: '100vh',
+    alignItems: 'center'
   },
   appBody: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: '#F1F1F1'
   },
   contentWrapper: {
     display: 'flex',
@@ -34,45 +34,49 @@ const useStyles = makeStyles({
 
 export default function Authentication() {
   const classes = useStyles();
+  const navigate = useNavigate();
 
   const handleCallback = (response: ReactFacebookLoginInfo) => {
-    console.log(response)
-    // store.set('auth', {...response})
+    store.set('auth', {...response});
+    navigate('/opportunities');
   }
+  
   return (
-    <div className={classes.root}>
-      <Box className={classes.appBody}>
-        <Grid container>
-          <Grid item xs={12} className={classes.textContainer}>
-            <Typography variant="h1">Join Our Community of Volunteers</Typography>
-          </Grid>
-        </Grid>
-        <Grid item xs={12} className={classes.loginWrapper}>
-          <Paper  className={classes.contentWrapper}>
-            <Grid container spacing={3} >
-              <Grid item sm={12} className={classes.textContainer}>
-                <Typography variant="subtitle1">
-                  Sign in with Facebook
-                </Typography>
-              </Grid>
-              <Grid item sm={12} className={classes.textContainer}>
-                <Typography variant="body1">
-                  We use Facebook sign-in to make signing into our community fast and secure 
-                </Typography>
-              </Grid>
-              <Grid item sm={12} className={classes.textContainer}>
-                <FacebookLogin
-                  appId={process.env.REACT_APP_FACEBOOK_APP_ID}
-                  autoLoad={false}
-                  fields="name,email,picture"
-                  icon="fa-facebook"
-                  callback={handleCallback} 
-                />
-              </Grid>
+    <PageLayout hideBackButton={true} hidePostButton={true}>
+      <div className={classes.root}>
+        <Box className={classes.appBody}>
+          <Grid container>
+            <Grid item xs={12} className={classes.textContainer}>
+              <Typography variant="h1">Join Our Community of Volunteers</Typography>
             </Grid>
-          </Paper>
-        </Grid>
-      </Box>
-    </div>
+          </Grid>
+          <Grid item xs={12} className={classes.loginWrapper}>
+            <Paper  className={classes.contentWrapper}>
+              <Grid container spacing={3} >
+                <Grid item sm={12} className={classes.textContainer}>
+                  <Typography variant="subtitle1">
+                    Sign in with Facebook
+                  </Typography>
+                </Grid>
+                <Grid item sm={12} className={classes.textContainer}>
+                  <Typography variant="body1">
+                    We use Facebook sign-in to make signing into our community fast and secure 
+                  </Typography>
+                </Grid>
+                <Grid item sm={12} className={classes.textContainer}>
+                  <FacebookLogin
+                    appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    icon="fa-facebook"
+                    callback={handleCallback} 
+                  />
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+        </Box>
+      </div>
+    </PageLayout>
   )
 }
