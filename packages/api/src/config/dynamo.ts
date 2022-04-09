@@ -2,7 +2,7 @@ import { DynamoDB } from 'aws-sdk';
 import { DataMapper } from '@aws/dynamodb-data-mapper';
 
 const dynamoDBOptions: DynamoDB.ClientConfiguration = {
-  region: process.env.AWS_DEFAULT_REGION || 'ca-central-1',
+  region: process.env.AWS_REGION || 'ca-central-1',
 };
 
 if (process.env.AWS_ACCESS_KEY_ID) {

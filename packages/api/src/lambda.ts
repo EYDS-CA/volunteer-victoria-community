@@ -1,7 +1,7 @@
 import serverlessExpress from '@vendia/serverless-express';
 
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Context, Callback } from 'aws-lambda';
-import app from './index';
+import app from './app';
 
 const routes = serverlessExpress({ app });
 
