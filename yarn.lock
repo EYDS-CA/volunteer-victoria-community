@@ -2829,7 +2829,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:*, @types/eslint@npm:^8.4.1":
+"@types/eslint@npm:*, @types/eslint@npm:8.4.1":
   version: 8.4.1
   resolution: "@types/eslint@npm:8.4.1"
   dependencies:
@@ -3786,7 +3786,7 @@ __metadata:
     "@testing-library/jest-dom": 5.16.4
     "@testing-library/react": 12.1.4
     "@testing-library/user-event": 13.5.0
-    "@types/eslint": ^8.4.1
+    "@types/eslint": 8.4.1
     "@types/react": 18.0.0
     "@types/react-dom": 18.0.0
     "@types/store": 2.0.2
