@@ -41,6 +41,14 @@ dynamodb_table="$(NAMESPACE)-tf-lock"
 endef
 export TF_BACKEND_CFG
 
+tag-dev:
+ifdef comment
+	@git tag -fa dev -m "Deploy dev: $(comment)"
+else
+	@git tag -fa dev -m "Deploy dev: $(git rev-parse --abbrev-ref HEAD)"
+endif
+	@git push --force origin refs/tags/dev:refs/tags/dev
+
 # ============================================================= #
 # Terraform automation
 # ============================================================= #
