@@ -9,6 +9,10 @@ export const theme = createTheme({
       fontSize: '3rem',
       fontWeight: 600,
     },
+    h2: {
+      fontSize: '2rem',
+      fontWeight: 600
+    },
     h5: {
       color: '#002C71',
       fontSize: '27px',
@@ -24,29 +28,17 @@ export const theme = createTheme({
       fontWeight: 600
     },
     subtitle2: {
-      fontSize: '14px',
-      color: '#333333',
+      fontSize: '1.3rem',
       fontWeight: 600
     },
     body1: {
       fontSize: '1.2rem',
     },
     body2: {
-      fontSize: '14px'
+      fontSize: '1rem'
     },
   },
   palette: {
-    common: {
-      white: '#FFFFFF',
-    },
-    background: {
-      default: '#E5E5E5'
-    },
-    primary: {
-      main: '#276EB4'
-    }
-    
   }
-
 });
 
