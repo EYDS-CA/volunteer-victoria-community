@@ -15,13 +15,26 @@ const useStyles = makeStyles<Theme>(theme => ({
       backgroundColor: theme.palette.background.default,
     },
   },
+  appContent: {
+    display: 'block',
+    height: '100vh'
+  },
   appBar: {
-    position: 'relative',
+    position: 'fixed',
+    height: '64px'
+  },
+  appBody: {
+    paddingTop: '64px',
+    display: 'flex',
+    height: '100%',
   },
   logo: {
     flex: 1,
   },
   layout: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
     width: 'auto',
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(3),
@@ -45,30 +58,36 @@ const PageLayout = (props: any) => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="static" color="default" className={classes.appBar}>
-        <Toolbar>
-          <Box className={classes.logo}>
-            <img src={VVCLogoSvg} alt='Volunteer Victoria' />
+      <Box className={classes.appContent}>
+        <AppBar position="static" color="default" className={classes.appBar}>
+          <Toolbar>
+            <Box className={classes.logo}>
+              <img src={VVCLogoSvg} alt='Volunteer Victoria' />
+            </Box>
+            <Avatar className={classes.avatar}>N</Avatar>
+            <Button color="primary" variant="outlined">
+              post an opportunity 
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <Box className={classes.appBody}>
+          <Box className={classes.layout}>
+            {!hideBackButton && 
+              <Link
+                component="a"
+                underline='none'
+                href = {backButtonRoute || '/dashboard'} 
+              >
+              {'<'} { backButtonText || 'Back to all opportunities'}
+              </Link>
+            }
+            {props.children}
           </Box>
-          <Avatar className={classes.avatar}>N</Avatar>
-          <Button color="primary" variant="outlined">
-            post an opportunity 
-          </Button>
-        </Toolbar>
-      </AppBar>
+
+        </Box>
+
+      </Box>
       
-      <main className={classes.layout}>
-        {!hideBackButton && 
-          <Link
-            component="a"
-            underline='none'
-            href = {backButtonRoute || '/dashboard'} 
-          >
-           {'<'} { backButtonText || 'Back to all opportunities'}
-          </Link>
-        }
-        {props.children}
-      </main>
     </React.Fragment>
   );
 }
