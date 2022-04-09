@@ -4,6 +4,7 @@ import store from 'store'
 import FacebookLogin, { ReactFacebookLoginInfo } from 'react-facebook-login';
 import { makeStyles } from '@mui/styles';
 import PageLayout from '../components/Layouts/PageLayout';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -33,12 +34,15 @@ const useStyles = makeStyles({
 
 export default function Authentication() {
   const classes = useStyles();
+  const navigate = useNavigate();
 
   const handleCallback = (response: ReactFacebookLoginInfo) => {
-    store.set('auth', {...response})
+    store.set('auth', {...response});
+    navigate('/opportunities');
   }
+  
   return (
-    <PageLayout hideBackButton={true}>
+    <PageLayout hideBackButton={true} hidePostButton={true}>
       <div className={classes.root}>
         <Box className={classes.appBody}>
           <Grid container>

@@ -6,12 +6,11 @@ import store from 'store'
 import { theme } from './theme';
 
 const PostDetails = lazy(() => import('./Views/PostDetails'));
-const Dashboard = lazy(() => import('./Views/Dashboard'));
+const Dashboard = lazy(() => import('./Views/OpportunitiesDashboard'));
 const Authentication = lazy(() => import('./Views/Authentication'));
 
 const PrivateRoute: React.FC<any> = ({ children }) => {
   const auth = store.get('auth') 
-  // Dummy auth for getting routes set up, replace check with proper auth
   return (
     auth ? children : <Navigate to="/"/>
   );
@@ -19,9 +18,8 @@ const PrivateRoute: React.FC<any> = ({ children }) => {
 
 const PublicRoute: React.FC<any> = ({ children }) => {
   const auth = store.get('auth')
-  // Dummy auth for getting routes set up, replace check with proper auth
   return (
-    auth ? <Navigate to="/dashboard"/> : children
+    auth ? <Navigate to="/opportunities"/> : children
   )
 };
 
@@ -60,7 +58,7 @@ const App = () => {
               }
             />
                         <Route
-              path='/dashboard'
+              path='/opportunities'
               element={
                 <PrivateRoute>
                   <Dashboard></Dashboard>
