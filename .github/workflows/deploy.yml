@@ -48,6 +48,9 @@ jobs:
       - name: Init terraform
         run: make init
 
+      - name: Init build environment
+        run: make clean
+
       - name: Build API
         run: make build-api
 
