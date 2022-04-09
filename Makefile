@@ -17,10 +17,12 @@ export BOOTSTRAP_TERRAFORM_DIR=terraform/bootstrap
 
 
 ifeq ($(ENV_NAME), dev)
+CLOUDFRONT_ID=E56FX4WYZRCGQ
 DOMAIN=
 endif
 
 ifeq ($(ENV_NAME), prod)
+CLOUDFRONT_ID=
 DOMAIN=
 endif
 
@@ -92,7 +94,8 @@ destroy: init
 	@terraform -chdir=$(TERRAFORM_DIR) destroy
 
 deploy-app:
-	aws s3 sync terraform/build/app s3://$(APP_SRC_BUCKET) --delete
+	@aws s3 sync ./packages/front_end/app/build s3://$(APP_SRC_BUCKET) --delete
+	@aws --region $(AWS_REGION) cloudfront create-invalidation --distribution-id $(CLOUDFRONT_ID) --paths "/*"
 
 deploy-all: deploy-tf deploy-app
 
@@ -101,6 +104,7 @@ pre-build: clean-yarn
 	@rm -rf ./packages/api/dist
 	@rm -rf terraform/build || true
 	@mkdir -p terraform/build
+	@yarn install
 
 build-api: pre-build
 	@echo "Building API for AWS Lambda"
@@ -112,6 +116,7 @@ build-api: pre-build
 	@(cd terraform/build; zip -rmq api.zip *)
 
 build-app: pre-build
+	@yarn workspace app build
 
 build-all: build-api build-app
 

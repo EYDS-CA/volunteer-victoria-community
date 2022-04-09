@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "workspaces": [
-    "packages/*"
+    "packages/api",
+    "packages/front_end/app"
   ],
   "author": "Freshworks Studio",
   "license": "MIT"
