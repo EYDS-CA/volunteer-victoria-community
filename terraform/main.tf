@@ -41,4 +41,7 @@ locals {
   api_name         = "${local.namespace}-api"
   has_domain       = var.domain != ""
   empty_api_zip    = ".artifacts/empty_lambda.zip"
+
+  posts_table      = "${local.namespace}-posts"
+  users_table      = "${local.namespace}-users"
 }

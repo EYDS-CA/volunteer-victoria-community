@@ -11,7 +11,10 @@ resource "aws_lambda_function" "api" {
 
   environment {
     variables = {
-      NODE_ENV           = var.target_env
+      NODE_ENV = var.target_env
+      
+      USERS_TABLE_NAME = aws_dynamodb_table.users.name
+      POSTS_TABLE_NAME = aws_dynamodb_table.posts.name
     }
   }
 }

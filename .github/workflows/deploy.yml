@@ -45,17 +45,20 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_ID }}
           aws-region: ca-central-1
 
-      - name: Init Terraform
+      - name: Init terraform
         run: make init
+
+      - name: Init build environment
+        run: make clean
 
       - name: Build API
         run: make build-api
 
-      # - name: Build App
-      #   run: make build-app
+      - name: Build App
+        run: make build-app
 
       - name: Deploy infrastructure and API
         run: make deploy-tf
 
-      # - name: Deploy app to CloudFront
-      #   run: make deploy-app
+      - name: Deploy app to CloudFront
+        run: make deploy-app
