@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "volunteer-repo-monorepo",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "workspaces": [
+    "packages/api",
+    "packages/front_end/app"
+  ],
   "author": "Freshworks Studio",
   "license": "MIT"
 }

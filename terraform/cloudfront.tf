@@ -26,14 +26,12 @@ resource "aws_cloudfront_origin_access_identity" "app" {
   comment = local.app_name
 }
 
-
 resource "aws_cloudfront_function" "response" {
   name    = "${local.namespace}-cf-response"
   runtime = "cloudfront-js-1.0"
   comment = "Add security headers"
   code    = file("${path.module}/cloudfront/response.js")
 }
-
 
 resource "aws_s3_bucket" "app_logs" {
   bucket = "${local.app_name}-logs"
@@ -47,9 +45,7 @@ resource "aws_s3_bucket_acl" "app_logs" {
 resource "aws_cloudfront_distribution" "app" {
   comment = local.app_name
 
-  aliases = local.has_domain ? [var.domain, "www.${var.domain}"] : []
-
-  
+  aliases = local.has_domain ? [var.domain] : []
 
   logging_config {
     bucket = aws_s3_bucket.app_logs.bucket_domain_name
@@ -109,7 +105,6 @@ resource "aws_cloudfront_distribution" "app" {
       event_type   = "viewer-response"
       function_arn = aws_cloudfront_function.response.arn
     }
-
 
     forwarded_values {
       query_string = true

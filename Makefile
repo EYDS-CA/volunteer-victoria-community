@@ -17,10 +17,12 @@ export BOOTSTRAP_TERRAFORM_DIR=terraform/bootstrap
 
 
 ifeq ($(ENV_NAME), dev)
-DOMAIN=
+CLOUDFRONT_ID=E56FX4WYZRCGQ
+DOMAIN=dev.vvc.freshworks.club
 endif
 
 ifeq ($(ENV_NAME), prod)
+CLOUDFRONT_ID=
 DOMAIN=
 endif
 
@@ -40,6 +42,14 @@ bucket="$(NAMESPACE)-tf-state"
 dynamodb_table="$(NAMESPACE)-tf-lock"
 endef
 export TF_BACKEND_CFG
+
+tag-dev:
+ifdef comment
+	@git tag -fa dev -m "Deploy dev: $(comment)"
+else
+	@git tag -fa dev -m "Deploy dev: $(git rev-parse --abbrev-ref HEAD)"
+endif
+	@git push --force origin refs/tags/dev:refs/tags/dev
 
 # ============================================================= #
 # Terraform automation
@@ -70,34 +80,47 @@ write-config-tf:
 init: write-config-tf
 	@terraform -chdir=$(TERRAFORM_DIR) init -input=false -reconfigure -backend-config=backend.hcl
 
-apply: 
+deploy-tf: init
 	@terraform -chdir=$(TERRAFORM_DIR) apply -auto-approve -input=false
 
 plan: init
 	@terraform -chdir=$(TERRAFORM_DIR) plan
 
+clean-yarn: 
+	@rm -rf node_modules
+	@yarn
+
 destroy: init
 	@terraform -chdir=$(TERRAFORM_DIR) destroy
 
-deploy-api: init 
-	@terraform -chdir=$(TERRAFORM_DIR) apply -auto-approve -input=false
-
 deploy-app:
-	aws s3 sync ./terraform/build/app s3://$(APP_SRC_BUCKET) --delete
+	@aws s3 sync ./packages/front_end/app/build s3://$(APP_SRC_BUCKET) --delete
+	@aws --region $(AWS_REGION) cloudfront create-invalidation --distribution-id $(CLOUDFRONT_ID) --paths "/*"
 
-deploy: deploy-api deploy-app
+deploy-all: deploy-tf deploy-app
 
 ## Application stack building
-pre-build:
-	mkdir -p ./terraform/build
+pre-build: clean-yarn
+	@rm -rf ./packages/api/dist
+	@rm -rf terraform/build || true
+	@mkdir -p terraform/build
+	@yarn install
 
 build-api: pre-build
+	@echo "Building API for AWS Lambda"
+	@yarn workspace api run build
+	@yarn workspaces focus api --production
+	@cp -r node_modules terraform/build/node_modules
+	@rm -rf terraform/build/node_modules/api
+	@cp -r ./packages/api/dist/* terraform/build
+	@(cd terraform/build; zip -rmq api.zip *)
 
 build-app: pre-build
+	@yarn workspace app build
 
 build-all: build-api build-app
 
-build-and-deploy: build-all deploy
+build-and-deploy: build-all deploy-all
 
 
 #Database
@@ -132,7 +155,3 @@ close-local:
 build-local:
 	@echo "+\n++ Make: rebuilding and runing docker-compose"
 	@docker-compose -f docker-compose.dev.yml up --build
-
-package-build:
-	@echo "+\n++ Building + Packaging app for deployment"
-	.build/package-app.sh
