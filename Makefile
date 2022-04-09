@@ -18,7 +18,7 @@ export BOOTSTRAP_TERRAFORM_DIR=terraform/bootstrap
 
 ifeq ($(ENV_NAME), dev)
 CLOUDFRONT_ID=E56FX4WYZRCGQ
-DOMAIN=
+DOMAIN=dev.vvc.freshworks.club
 endif
 
 ifeq ($(ENV_NAME), prod)
