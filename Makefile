@@ -106,7 +106,7 @@ pre-build: clean-yarn
 	@mkdir -p terraform/build
 	@yarn install
 
-build-api: pre-build
+build-api:
 	@echo "Building API for AWS Lambda"
 	@yarn workspace api run build
 	@yarn workspaces focus api --production
@@ -115,10 +115,10 @@ build-api: pre-build
 	@cp -r ./packages/api/dist/* terraform/build
 	@(cd terraform/build; zip -rmq api.zip *)
 
-build-app: pre-build
+build-app:
 	@yarn workspace app build
 
-build-all: build-api build-app
+build-all: pre-build build-api build-app
 
 build-and-deploy: build-all deploy-all
 

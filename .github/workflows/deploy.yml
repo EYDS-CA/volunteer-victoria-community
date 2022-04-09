@@ -45,8 +45,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_ID }}
           aws-region: ca-central-1
 
-      - name: Init Terraform
+      - name: Init terraform
         run: make init
+
+      - name: Init yarn
+        run: make pre-build
 
       - name: Build API
         run: make build-api
