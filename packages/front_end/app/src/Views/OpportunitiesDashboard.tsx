@@ -15,6 +15,7 @@ const useStyles = makeStyles({
     display: 'flex',
     border: '1px solid rgba(0, 0, 0, 0.2)',
     borderRadius: '4px',
+    backgroundColor: 'white',
     padding: '1.5em 2em'
   },
   hostRow: {

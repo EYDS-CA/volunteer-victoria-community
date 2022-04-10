@@ -4,9 +4,10 @@ import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import store from 'store';
 import { theme } from './theme';
 
-const PostDetails = lazy(() => import('./Views/PostDetails'));
-const Dashboard = lazy(() => import('./Views/OpportunitiesDashboard'));
 const Authentication = lazy(() => import('./Views/Authentication'));
+const Dashboard = lazy(() => import('./Views/OpportunitiesDashboard'));
+const PostDetails = lazy(() => import('./Views/PostDetails'));
+const CreateOpportunity = lazy(() => import('./Views/CreateOpportunity'));
 
 const PrivateRoute: React.FC<any> = ({ children }) => {
   const auth = store.get('auth') 
@@ -56,11 +57,20 @@ const App = () => {
                 
               }
             />
-                        <Route
+            <Route
               path='/opportunities'
               element={
                 <PrivateRoute>
                   <Dashboard></Dashboard>
+                </PrivateRoute>
+                
+              }
+            />
+            <Route
+              path='/create-opportunity'
+              element={
+                <PrivateRoute>
+                  <CreateOpportunity></CreateOpportunity>
                 </PrivateRoute>
                 
               }
