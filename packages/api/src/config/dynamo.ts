@@ -12,12 +12,14 @@ if (process.env.ENV_NAME === 'production') {
     sessionToken: process.env.AWS_SESSION_TOKEN
   }
 } else {
-  dynamoDBOptions.endpoint = 'localstack:4566';
+  dynamoDBOptions.endpoint = 'localhost:4566';
   dynamoDBOptions.sslEnabled = false;
   dynamoDBOptions.credentials = {
     accessKeyId: 'x',
     secretAccessKey: 'x',
   };
+  console.log('Connecting to localstack dynamodb');
+  console.dir(dynamoDBOptions);
 }
 
 export const DynamoClient = new DynamoDB(dynamoDBOptions);

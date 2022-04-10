@@ -1,52 +1,74 @@
 import {
   attribute,
   hashKey,
-  table,
+  table
 } from '@aws/dynamodb-data-mapper-annotations';
+import { IsDefined, IsEnum, IsInt, IsISO8601, IsOptional, Min } from 'class-validator';
 import { IndoorOutdoor } from './enums';
 
 @table(process.env.OPPORTUNITY_TABLE_NAME || 'opportunity')
 export default class Opportunity {
   @hashKey()
+  @IsDefined()
   id: string;
 
   @attribute()
+  @IsDefined()
   creatorUserId: string;
 
+  @IsDefined()
   @attribute()
-  contactInfo: {
-    name: string;
-    phoneNumber: string;
-    email: string;
-  };
+  contactName: string;
+  
+  @attribute()
+  @IsOptional()
+  contactPhoneNumber?: string;
 
   @attribute()
-  name: string;
+  @IsOptional()
+  contactEmail?: string;
 
   @attribute()
+  @IsDefined()
+  opportunityName: string;
+
+  @attribute()
+  @IsDefined()
   description: string;
 
   @attribute()
+  @IsDefined()
   location: string;
 
   @attribute()
+  @Min(0)
+  @IsInt()
   peopleRequired: number;
 
   @attribute()
-  startTime: Date;
+  @IsISO8601()
+  @IsDefined()
+  startTime: string;
 
   @attribute()
+  @IsISO8601()
+  @IsDefined()
   endTime: Date;
 
   @attribute()
+  @IsDefined()
   criminalCheckRequired: boolean;
 
   @attribute()
-  indoorOutdoor: IndoorOutdoor;
+  @IsEnum(IndoorOutdoor)
+  @IsOptional()
+  indoorOutdoor?: IndoorOutdoor;
 
   @attribute()
-  idealVolunteer: string;
+  @IsOptional()
+  idealVolunteer?: string;
 
   @attribute()
-  additionalInfo: string;
+  @IsOptional()
+  additionalInfo?: string;
 }
