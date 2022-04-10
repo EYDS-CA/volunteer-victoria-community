@@ -102,13 +102,18 @@ describe('Opportunities', () => {
       })
       .end((err, res) => {
         const { id } = res.body;
+        id.should.have.lengthOf(21);
         chai
           .request(app)
-          .delete(`${apiBaseUrl}/opportunity/:id`)
+          .delete(`${apiBaseUrl}/opportunity/${id}`)
           .end((err, res) => {
-            const { id: deletedId } = res.body;
-            id.should.equal(deletedId);
-            done();
+            chai
+              .request(app)
+              .get(`${apiBaseUrl}/opportunity`)
+              .end((err, res) => {
+                res.body.should.deep.equal({ opportunities: [] });
+                done();
+              });
           });
       });
   });
