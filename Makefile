@@ -9,6 +9,8 @@ export PROJECT := $(or $(PROJECT),vcc)
 export AWS_REGION ?= ca-central-1
 ENV_NAME ?= dev
 NAMESPACE = $(PROJECT)-$(ENV_NAME)
+APP_DIR = ./packages/front_end/app
+REACT_APP_FACEBOOK_APP_ID = 562027152004706
 
 APP_SRC_BUCKET = $(NAMESPACE)-app
 
@@ -93,7 +95,7 @@ destroy: init
 	@terraform -chdir=$(TERRAFORM_DIR) destroy
 
 deploy-app:
-	@aws s3 sync ./packages/front_end/app/build s3://$(APP_SRC_BUCKET) --delete
+	@aws s3 sync $(APP_DIR)/build s3://$(APP_SRC_BUCKET) --delete
 	@aws --region $(AWS_REGION) cloudfront create-invalidation --distribution-id $(CLOUDFRONT_ID) --paths "/*"
 
 deploy-all: deploy-tf deploy-app
@@ -151,5 +153,5 @@ build-local:
 
 create-localhost-cert:
 	@echo "Assumes you have mkcert installed"
-	@mkdir -p .cert
-	@mkcert -key-file ./.cert/key.pem -cert-file ./.cert/cert.pem "localhost"
+	@mkdir -p $(APP_DIR)/.cert
+	@mkcert -key-file $(APP_DIR)/.cert/key.pem -cert-file $(APP_DIR)/.cert/cert.pem "localhost"
