@@ -148,3 +148,8 @@ close-local:
 build-local:
 	@echo "+\n++ Make: rebuilding and runing docker-compose"
 	@docker-compose -f docker-compose.dev.yml up --build
+
+create-localhost-cert:
+	@echo "Assumes you have mkcert installed"
+	@mkdir -p .cert
+	@mkcert -key-file ./.cert/key.pem -cert-file ./.cert/cert.pem "localhost"
