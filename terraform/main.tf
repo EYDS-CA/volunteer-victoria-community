@@ -42,6 +42,7 @@ locals {
   has_domain       = var.domain != ""
   empty_api_zip    = ".artifacts/empty_lambda.zip"
 
-  posts_table      = "${local.namespace}-posts"
-  users_table      = "${local.namespace}-users"
+  opportunity_table = "${local.namespace}-opportunity"
+  user_table        = "${local.namespace}-user"
+  applicant_table   = "${local.namespace}-applicant"
 }

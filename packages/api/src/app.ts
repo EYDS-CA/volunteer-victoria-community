@@ -2,11 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 
-import UserRoutes from './routes/user.routes';
-import PostRoutes from './routes/post.routes';
-import { DynamoMapper } from './config/dynamo';
-import { User } from './schema/User.schema';
-import { Post } from './schema/Post.schema';
+import UserRoutes from './routes/user';
+import PostRoutes from './routes/opportunity';
 
 const app = express();
 app.use(cors());
