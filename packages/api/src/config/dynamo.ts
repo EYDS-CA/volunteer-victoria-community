@@ -5,7 +5,7 @@ const dynamoDBOptions: DynamoDB.ClientConfiguration = {
   region: process.env.AWS_REGION || 'ca-central-1',
 };
 
-if (process.env.ENV_NAME === 'production') {
+if (process.env.NODE_ENV === 'production') {
   dynamoDBOptions.credentials = {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
