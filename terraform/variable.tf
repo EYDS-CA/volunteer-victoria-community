@@ -6,7 +6,7 @@ variable "domain" {}
 variable "app_sources_bucket" {}
 
 variable "function_memory_mb" {
-  default = "2048"
+  default = "1024"
 }
 
 variable "region" {

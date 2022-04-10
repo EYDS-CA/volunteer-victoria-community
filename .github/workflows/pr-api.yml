@@ -1,0 +1,41 @@
+name: API PR checks
+
+on:
+  pull_request:
+    paths:
+      - 'packages/api/**'
+
+jobs:
+  checks:
+    name: Checks
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - uses: actions/cache@v2
+        name: Cache yarn
+        with:
+          path: ./.yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
+
+      - name: Init build environment
+        run: make clean
+
+      - name: Build API
+        run: make build-api
+
+      - name: Start localstack
+        run: |
+          docker-compose up localstack &
+          until $(curl --silent --fail localhost:4566/health | grep "\"dynamodb\": \"running\"" > /dev/null); do
+            printf '.'
+            sleep 5
+          done
+
+      - name: Run tests
+        run: |
+          yarn workspaces focus api
+          yarn workspace api test

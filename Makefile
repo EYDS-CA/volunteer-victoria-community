@@ -15,7 +15,6 @@ APP_SRC_BUCKET = $(NAMESPACE)-app
 TERRAFORM_DIR = terraform
 export BOOTSTRAP_TERRAFORM_DIR=terraform/bootstrap
 
-
 ifeq ($(ENV_NAME), dev)
 CLOUDFRONT_ID=E56FX4WYZRCGQ
 DOMAIN=dev.vvc.freshworks.club
@@ -42,6 +41,10 @@ bucket="$(NAMESPACE)-tf-state"
 dynamodb_table="$(NAMESPACE)-tf-lock"
 endef
 export TF_BACKEND_CFG
+
+# ============================================================= #
+# Creating tags to trigger deployment
+# ============================================================= #
 
 tag-dev:
 ifdef comment
@@ -121,15 +124,6 @@ build-all: pre-build build-api build-app
 
 build-and-deploy: build-all deploy-all
 
-
-#Database
-# export DB_CONFIG_NAME := $(or $(DB_CONFIG_NAME),default)
-# export DB_CONFIG_TYPE := $(or $(DB_CONFIG_TYPE),postgres)
-# export DB_HOST := $(or $(DB_HOST),postgres)
-# export DB_PORT := $(or $(DB_PORT),5432)
-# export DB_USERNAME := $(or $(DB_USERNAME),vape_nestapi)
-# export DB_PASSWORD := $(or $(DB_PASSWORD),vape_nest123)
-# export DB_DATABASE := $(or $(DATABASE),nest_api_dev)
 
 ####################################################################
 ## Local Development
