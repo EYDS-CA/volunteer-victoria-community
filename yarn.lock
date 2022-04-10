@@ -1732,7 +1732,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:11.9.0":
+"@emotion/react@npm:^11.9.0":
   version: 11.9.0
   resolution: "@emotion/react@npm:11.9.0"
   dependencies:
@@ -1775,7 +1775,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/styled@npm:11.8.1":
+"@emotion/styled@npm:^11.8.1":
   version: 11.8.1
   resolution: "@emotion/styled@npm:11.8.1"
   dependencies:
@@ -2135,7 +2135,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/material@npm:5.6.0":
+"@mui/icons-material@npm:^5.6.0":
+  version: 5.6.0
+  resolution: "@mui/icons-material@npm:5.6.0"
+  dependencies:
+    "@babel/runtime": ^7.17.2
+  peerDependencies:
+    "@mui/material": ^5.0.0
+    "@types/react": ^16.8.6 || ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 8f28db4a83900296f5d89da8747a04f3728d9d4c1823be34508efab65a69aa9b918893206ac580efe150a0c0435a008bba71b876c5ff51f78db84587cbf7deb9
+  languageName: node
+  linkType: hard
+
+"@mui/material@npm:^5.6.0":
   version: 5.6.0
   resolution: "@mui/material@npm:5.6.0"
   dependencies:
@@ -2205,7 +2221,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/styles@npm:5.6.0":
+"@mui/styles@npm:^5.6.0":
   version: 5.6.0
   resolution: "@mui/styles@npm:5.6.0"
   dependencies:
@@ -2642,7 +2658,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:5.16.4":
+"@testing-library/jest-dom@npm:^5.16.4":
   version: 5.16.4
   resolution: "@testing-library/jest-dom@npm:5.16.4"
   dependencies:
@@ -2659,7 +2675,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:12.1.4":
+"@testing-library/react@npm:^12.1.4":
   version: 12.1.4
   resolution: "@testing-library/react@npm:12.1.4"
   dependencies:
@@ -2673,7 +2689,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/user-event@npm:13.5.0":
+"@testing-library/user-event@npm:^13.5.0":
   version: 13.5.0
   resolution: "@testing-library/user-event@npm:13.5.0"
   dependencies:
@@ -2829,7 +2845,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:*, @types/eslint@npm:8.4.1":
+"@types/eslint@npm:*":
   version: 8.4.1
   resolution: "@types/eslint@npm:8.4.1"
   dependencies:
@@ -2976,7 +2992,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:^17.0.23":
   version: 17.0.23
   resolution: "@types/node@npm:17.0.23"
   checksum: a3517554737cbb042e76c30d0e5482192ac4d9bea0eeb086e2622d9cabf460a0eb52a696b99fcd18e7fcc93c96db6cc7ae507f6608f256ef0b5c1d8c87a5a470
@@ -3032,12 +3048,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:*, @types/react-dom@npm:18.0.0":
+"@types/react-dom@npm:*":
   version: 18.0.0
   resolution: "@types/react-dom@npm:18.0.0"
   dependencies:
     "@types/react": "*"
   checksum: 0d8c9cb3e72aefe0dd2b58a49845a200369f01ae92f3f11f642e04efc95dfd1c9380b6592d4273dd6113fb8707947d15b66d56c75c41f39f28bd897f0c08dfa9
+  languageName: node
+  linkType: hard
+
+"@types/react-dom@npm:17.0.0":
+  version: 17.0.0
+  resolution: "@types/react-dom@npm:17.0.0"
+  dependencies:
+    "@types/react": "*"
+  checksum: d0f989e12fabb2572a38d79630c209499afa2edc865cc3ebc50333845715bd73d88ac88e24274977cd62433e46e91ddf94c30c2c12f89e427bbb739682caf677
+  languageName: node
+  linkType: hard
+
+"@types/react-facebook-login@npm:^4.1.4":
+  version: 4.1.4
+  resolution: "@types/react-facebook-login@npm:4.1.4"
+  dependencies:
+    "@types/react": "*"
+  checksum: 335bf2bf2acc3c31954860c3b37320a7395b433a77fb66f845881d35193c2d621bbd91f9fee9814dd05af10c6ee89137fcd9113fcbcd8dae81baf5aa1da37e25
   languageName: node
   linkType: hard
 
@@ -3059,7 +3093,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.0.0":
+"@types/react@npm:*":
   version: 18.0.0
   resolution: "@types/react@npm:18.0.0"
   dependencies:
@@ -3067,6 +3101,16 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 8a9769e2cabe335c86179881577e6ca32f3a6abdd5adbe2d498e48b78d532130da828a53ef25f21915179da454654b811292e0a8191c8a81af3bf4b05f5673bd
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:17.0.0":
+  version: 17.0.0
+  resolution: "@types/react@npm:17.0.0"
+  dependencies:
+    "@types/prop-types": "*"
+    csstype: ^3.0.2
+  checksum: 0767d1c635613cb08de1ad6b8f73e3ee01ae0069733fa56382c72a8dbed741849e74f62a17756c7b76ccd2b57dd9891d5767c3134f35788720c6bb9c186a933b
   languageName: node
   linkType: hard
 
@@ -3137,7 +3181,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/store@npm:2.0.2":
+"@types/store@npm:^2.0.2":
   version: 2.0.2
   resolution: "@types/store@npm:2.0.2"
   checksum: aa548e117f9a1e2b1ff0263f3261ad7066b885ed32c05019832e4cbf91bf09f5f5891cccfb4e001a6cdc87d306b1d6376b20bdf8976dfced38b18db3c9c6fef3
@@ -3779,20 +3823,24 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app@workspace:packages/front_end/app"
   dependencies:
-    "@emotion/react": 11.9.0
-    "@emotion/styled": 11.8.1
-    "@mui/material": 5.6.0
-    "@mui/styles": 5.6.0
-    "@testing-library/jest-dom": 5.16.4
-    "@testing-library/react": 12.1.4
-    "@testing-library/user-event": 13.5.0
-    "@types/eslint": 8.4.1
-    "@types/react": 18.0.0
-    "@types/react-dom": 18.0.0
-    "@types/store": 2.0.2
+    "@emotion/react": ^11.9.0
+    "@emotion/styled": ^11.8.1
+    "@mui/icons-material": ^5.6.0
+    "@mui/material": ^5.6.0
+    "@mui/styles": ^5.6.0
+    "@testing-library/jest-dom": ^5.16.4
+    "@testing-library/react": ^12.1.4
+    "@testing-library/user-event": ^13.5.0
+    "@types/node": ^17.0.23
+    "@types/react": 17.0.0
+    "@types/react-dom": 17.0.0
+    "@types/react-facebook-login": ^4.1.4
+    "@types/store": ^2.0.2
+    moment: ^2.29.2
     react: 17.0.0
     react-dom: 17.0.0
-    react-router-dom: 6.3.0
+    react-facebook-login: ^4.1.1
+    react-router-dom: ^6.3.0
     react-scripts: 5.0.0
     store: 2.0.12
     typescript: 4.6.3
@@ -9307,6 +9355,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"moment@npm:^2.29.2":
+  version: 2.29.2
+  resolution: "moment@npm:2.29.2"
+  checksum: ee850b5776485e2af0775ceb3cfebaa7d7638f0a750fe0678fcae24c310749f96c1938808384bd422a55e5703834a71fcb09c8a1d36d9cf847f6ed0205d7a3e5
+  languageName: node
+  linkType: hard
+
 "ms@npm:2.0.0":
   version: 2.0.0
   resolution: "ms@npm:2.0.0"
@@ -11147,6 +11202,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-facebook-login@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "react-facebook-login@npm:4.1.1"
+  peerDependencies:
+    react: ^16.0.0
+  checksum: e644da474c6bf308e9a862c55397d61fd876a088345f3e9d234ec457eb3c205d1deb1263c5000005adfc1899bf6774cf761ee670c33bd6b0887f0dfd3bdff957
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -11168,7 +11232,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:6.3.0":
+"react-router-dom@npm:^6.3.0":
   version: 6.3.0
   resolution: "react-router-dom@npm:6.3.0"
   dependencies:

@@ -52,9 +52,15 @@ jobs:
         run: make clean
 
       - name: Build API
+        env: 
+          # TODO remove this once we are targeting zero warnings
+          CI: false
         run: make build-api
 
       - name: Build App
+        env: 
+          # TODO remove this once we are targeting zero warnings
+          CI: false
         run: make build-app
 
       - name: Deploy infrastructure and API
