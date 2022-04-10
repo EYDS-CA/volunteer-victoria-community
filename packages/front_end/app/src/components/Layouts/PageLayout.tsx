@@ -30,7 +30,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   appBody: {
     paddingTop: '64px',
     display: 'flex',
-    height: '100%',
+    minHeight: '100%',
   },
   logo: {
     flex: 1,
@@ -92,7 +92,12 @@ const PageLayout = (props: any) => {
               !hidePostButton
                 &&
               <>
-                <Avatar className={classes.avatar} alt={userData?.name || ''} src={userData?.picture?.data?.url || ''}  imgProps={{onClick: handleAvatarClick}}/>
+                <Avatar 
+                  className={classes.avatar} 
+                  alt={userData?.name || ''} 
+                  src={userData?.picture?.data?.url || ''}  
+                  imgProps={{onClick: handleAvatarClick}}
+                />
                 <Menu
                   id="user-menu"
                   anchorEl={anchorEl}
@@ -101,7 +106,11 @@ const PageLayout = (props: any) => {
                 >
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
-                <Button color="primary" variant="outlined">
+                <Button 
+                  color="primary" 
+                  variant="outlined"
+                  onClick={() => navigate('/create-opportunity')}
+                >
                   post an opportunity 
                 </Button>
               </>

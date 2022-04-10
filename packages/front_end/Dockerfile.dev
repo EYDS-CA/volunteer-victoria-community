@@ -17,7 +17,7 @@ RUN apt-get update
 RUN apt-get install libgl1 -y
 
 
-RUN cd ./front_end/app && npm i && cd ../
+RUN cd ./front_end/app && npm i --force && cd ../
 # RUN chown -R node ./app/node_modules
 RUN chmod 777 ./front_end/app/node_modules
 
