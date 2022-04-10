@@ -36,4 +36,6 @@ jobs:
           done
 
       - name: Run tests
-        run: yarn workspace api test
+        run: |
+          yarn workspaces focus api
+          yarn workspace api test
