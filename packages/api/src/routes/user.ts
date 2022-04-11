@@ -3,11 +3,13 @@ import User from '../schema/User';
 import { DynamoMapper } from '../config/dynamo';
 import { validate } from 'class-validator';
 import { nanoid } from 'nanoid';
+
+import { adminCheck } from '../middleware/admin.middleware';
 import { UserType } from '../schema/enums';
 
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/', adminCheck, async (req, res) => {
   const users = [];
   for await (const item of DynamoMapper.scan(User)) {
     users.push(item);
@@ -15,7 +17,7 @@ router.get('/', async (req, res) => {
   res.json({ users });
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', adminCheck, async (req, res) => {
   const user = new User();
   Object.assign(user, req.params);
   const result = await DynamoMapper.delete(user);
