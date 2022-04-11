@@ -30,8 +30,6 @@ const Loader = () => (
 );
 
 const App = () => {
-  console.log(process.env.REACT_APP_FACEBOOK_APP_ID)
-
   useEffect(() => {
     document.body.style.margin = '0px'
   }, [])
