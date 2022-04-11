@@ -30,7 +30,6 @@ const Loader = () => (
 );
 
 const App = () => {
-
   useEffect(() => {
     document.body.style.margin = '0px'
   }, [])
