@@ -39,6 +39,9 @@ services:
       - AWS_SECRET_ACCESS_KEY=yyy
       - DB_ENDPOINT=http://localstack:4566
       - HOST_PORT=4000
+      - SESSION_SECRET=secret
+      - FACEBOOK_CLIENT_ID=562027152004706
+      - FACEBOOK_CLIENT_SECRET=secret
   
   localstack:
     image: localstack/localstack:0.12.15

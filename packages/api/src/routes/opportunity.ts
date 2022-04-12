@@ -4,6 +4,7 @@ import Opportunity from '../schema/Opportunity';
 import { nanoid } from 'nanoid';
 import { validate } from 'class-validator';
 import Applicant from '../schema/Applicant';
+import { adminCheck } from '../middleware/admin.middleware';
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.post('/', async (req, res) => {
   res.status(201).json(result);
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', adminCheck, async (req, res) => {
   const opp = new Opportunity();
   Object.assign(opp, req.params);
   const result = await DynamoMapper.delete(opp);
@@ -51,7 +52,7 @@ router.put('/:id/applicant/:userId', async (req, res) => {
   res.json(result);
 });
 
-router.delete('/:opportunityId/applicant/:userId', async (req, res) => {
+router.delete('/:opportunityId/applicant/:userId', adminCheck, async (req, res) => {
   const app = new Applicant();
   Object.assign(app, req.params);
   const result = await DynamoMapper.delete(app);
