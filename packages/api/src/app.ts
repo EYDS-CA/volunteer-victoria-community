@@ -30,15 +30,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(helmet());
-app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
+app.use(session({ secret: process.env.SESSION_SECRET || 'secret', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 
 passport.use(
   new FBStrategy({
-    clientID: '562027152004706',
-    clientSecret: '9c35f2a3ffe948a91f3e2c31faca89c3',
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
   }, async (at, rt, profile, done) => {
     const filter: ConditionExpression = {
       type: 'Equals',
